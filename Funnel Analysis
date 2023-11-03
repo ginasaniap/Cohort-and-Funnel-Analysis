@@ -1,0 +1,16 @@
+--FUNNEL ANALYSIS
+--We want to know the conversion of user that registered until made questions on stackoverflow
+with users_funnel as
+(
+select
+  count(distinct users.id) registered_user,
+  count(distinct case when quest.id is not null then quest.owner_user_id end) posted_questions_user,
+  count(distinct case when quest.id is not null and quest.answer_count>0 then quest.owner_user_id end) answered_posted_question_user,
+  count(distinct case when quest.id is not null and quest.answer_count>0 and quest.accepted_answer_id is not null then quest.owner_user_id end) acc_answered_posted_question_user
+from `bigquery-public-data.stackoverflow.users` users
+left join `bigquery-public-data.stackoverflow.posts_questions` quest
+on users.id = quest.owner_user_id
+)
+select
+*
+from users_funnel
