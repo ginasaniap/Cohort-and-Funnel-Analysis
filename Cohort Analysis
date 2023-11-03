@@ -1,4 +1,5 @@
 -- COHORT ANALYSIS
+-- We want to know the pattern of loyal custumer on stackoverflow
 WITH
 cte_1 as (
  select DISTINCT -- to prevent doubled counting on 1 month
